@@ -1,5 +1,8 @@
 import fetch from "node-fetch";
 import { markdownToJson } from "./util.js";
+import express from "express";
+
+const app = express();
 
 async function getQuestionsFromAPI() {
    try {
@@ -15,16 +18,22 @@ async function getQuestionsFromAPI() {
    }
 }
 
-const questionsRaw = await getQuestionsFromAPI();
-const questionsRawArray = questionsRaw.split("###### ");
-questionsRawArray.shift();
-
-const questions = questionsRawArray.map((q, idx) => {
+app.get("/api/questions", async (req, res) => {
    try {
-      return markdownToJson(q);
-   } catch (error) {
-      console.error(error);
+      const questionsRaw = await getQuestionsFromAPI();
+      const questionsRawArray = questionsRaw.split("###### ");
+      questionsRawArray.shift();
+
+      const questions = questionsRawArray.map(markdownToJson);
+
+      res.json(questions);
+   } catch (err) {
+      console.error(err);
    }
 });
 
-console.log(questions);
+app.listen(3000, () => {
+   console.log(
+      "Server started port 3000, visit docs here: http://localhost:3000/api/docs"
+   );
+});
