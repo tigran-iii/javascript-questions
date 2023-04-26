@@ -1,3 +1,4 @@
 export const App = () => {
-   return <></>;
+   return <>
+   <h1>Some content here</h1></>;
 };
