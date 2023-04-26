@@ -1,10 +1,4 @@
 {
-   "builds": [
-      {
-         "src": "/api/**/*.js",
-         "use": "@vercel/node"
-      }
-   ],
    "redirects": [
       {
          "source": "/api/questions",
