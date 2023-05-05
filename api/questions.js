@@ -3,10 +3,19 @@ import { markdownToJson } from "./util.js";
 import { randomUUID } from "crypto";
 
 export default async (req, res) => {
+
    async function getQuestionsFromAPI() {
       try {
          const data = await fetch(
-            "https://api.github.com/repos/lydiahallie/javascript-questions/readme"
+            "https://api.github.com/repos/lydiahallie/javascript-questions/readme",
+            {
+               headers: {
+                  Authorization: `Bearer ${
+                     // eslint-disable-next-line no-undef
+                     process.env.GITHUB_ACCESS_TOKEN
+                  }`,
+               },
+            }
          ).then((res) => res.json());
 
          // eslint-disable-next-line no-undef
