@@ -1,4 +1,5 @@
 import { useQuestions } from "../hooks/useQuestions";
+import Markdown from "react-markdown";
 
 export const Questions = () => {
    const { data: questions, isError, isLoading } = useQuestions();
@@ -8,8 +9,27 @@ export const Questions = () => {
 
    return (
       <div>
-         {questions.map((q) => (
-            <div key={q.id}>{JSON.stringify(q)}</div>
+         {questions.map(({ id, question, code, options, explanation }) => (
+            <div className="" key={id}>
+               <h2>
+                  <Markdown>{question}</Markdown>
+               </h2>
+               <pre>
+                  <Markdown >{code}</Markdown>
+               </pre>
+               {/* TODO add bullet points for the list */}
+               <ul className="list-disc">
+                  {options.map((option, idx) => (
+                     <li key={idx}>
+                        <Markdown>{option}</Markdown>
+                     </li>
+                  ))}
+               </ul>
+               <details>
+                  <summary>Answer</summary>
+                  <Markdown>{explanation}</Markdown>
+               </details>
+            </div>
          ))}
       </div>
    );
