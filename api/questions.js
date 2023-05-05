@@ -1,5 +1,6 @@
 import fetch from "node-fetch";
 import { markdownToJson } from "./util.js";
+import { randomUUID } from "crypto";
 
 export default async (req, res) => {
    async function getQuestionsFromAPI() {
@@ -24,7 +25,9 @@ export default async (req, res) => {
       const questionsRawArray = questionsRaw.split("###### ");
       questionsRawArray.shift();
 
-      const questions = questionsRawArray.map(markdownToJson);
+      const questions = questionsRawArray
+         .map(markdownToJson)
+         .map((q) => ({ id: randomUUID(), ...q }));
 
       res.json(questions);
    } catch (err) {

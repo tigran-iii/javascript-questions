@@ -6,5 +6,11 @@ export const Questions = () => {
    if (isError) return `Error! Couldn't load the questions`;
    if (isLoading) return `Loading...`;
 
-   return <div>{JSON.stringify(questions)}</div>;
+   return (
+      <div>
+         {questions.map((q) => (
+            <div key={q.id}>{JSON.stringify(q)}</div>
+         ))}
+      </div>
+   );
 };
